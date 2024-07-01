@@ -13,7 +13,8 @@ const Header = () => {
                     ?
                     <>
                         <button onClick={() => { doSignOut().then(() => { navigate('/login') }) }} className='text-sm text-blue-600 underline'>Logout</button>
-                    </>
+                        <button onClick={() =>  { navigate('/home') }} className='text-sm text-blue-600 underline'>Backs</button>
+                        </>
                     :
                     <>
                         <Link className='text-sm text-blue-600 underline' to={'/login'}>Login</Link>

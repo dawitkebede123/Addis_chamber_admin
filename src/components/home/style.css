@@ -11,6 +11,7 @@
   }
   
   .greeting {
+    /* display: flex; */
     /* Style the greeting text as desired */
   }
   
@@ -45,6 +46,10 @@
 }
 #welcome_text{
   color: rgb(42, 107, 42);
-}  
+} 
+
+
+
+
 
   

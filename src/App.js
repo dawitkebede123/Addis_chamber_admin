@@ -3,6 +3,8 @@ import Register from "./components/auth/register";
 
 import Header from "./components/header";
 import Home from "./components/home";
+import EditForm from './components/home/edit'
+import RegistrationForm from "./components/home/register_company";
 
 import { AuthProvider } from "./contexts/authContext";
 import { useRoutes } from "react-router-dom";
@@ -25,6 +27,14 @@ function App() {
       path: "/home",
       element: <Home />,
     },
+    {
+      path: "/edit",
+      element:<EditForm />
+    },
+    {
+      path: "/register_company",
+      element: <RegistrationForm/>
+    }
   ];
   let routesElement = useRoutes(routesArray);
   return (

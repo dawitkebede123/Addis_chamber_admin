@@ -3,8 +3,11 @@ import { useAuth } from '../../contexts/authContext';
 import './style.css'; // Import your CSS file for styling
 import { getDatabase, ref, get } from "firebase/database";
 import firebase from 'firebase/compat/app';
+import { Link } from 'react-router-dom';
 // import './searchField.js'
 import './dataSearch.js'
+import MyComponent from './dataSearch.js';
+// import RegistrationForm from './register.jsx';
 
 
 const SearchField = () => {
@@ -129,56 +132,19 @@ const SearchField = () => {
 
 
       <div className="search-bar"> {/* Search bar container */}
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Search to manage"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-        <button className='register_btn'>Register New company</button>
-      
-        {/* Add a search icon (optional) */}
+      <MyComponent/>
+
+      <button className='register_btn' >
+        <Link to="/register_company">
+
+        Register New company
+
+        </Link>
+      </button>
       </div>
       
-      {/* <SearchField/> */}
     </div>
-    <div className='searchResult'>
-    {/* return ( */}
-    {/* <div className='global-container'> */}
-
     
-              <input type="text"
-              className="searchBar"
-            onChange={(event)=>setValue(event.target.value)}
-            value={value}
-              />
-              <div className="searchBack">
-                {
-                    result.map((result,index) => (
-                        // <a key={index}>
-                            <div className="searchEntry">
-                                {result}
-                            </div>
-                        // </a>
-                    ))
-                }
-              </div>
-   
-    {/* </div> */}
-  {/* ); */}
-        {/* <DataSearch/> */}
-        {/* <SearchField/> */}
-    {/* <ul>
-        {businessArray.map( (item, index) => (
-          <li key={index}> 
-            {item.companyName}
-          </li>
-        ) )}
-      </ul> */}
-
-    </div>
-   
     </div>
   );
 };

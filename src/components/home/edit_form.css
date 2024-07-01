@@ -1,0 +1,60 @@
+.beautiful-form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 400px; /* Adjust width as needed */
+  }
+  select {
+    /* Common styles for input and select */
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }   
+  .beautiful-form li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .beautiful-form label {
+    width: 100px;
+    margin-right: 10px;
+  }
+  
+  .beautiful-form input,
+  .beautiful-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 100%;
+  }
+  
+  .beautiful-form textarea {
+    height: 100px; /* Adjust height as needed */
+  }
+  
+  .beautiful-form button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .beautiful-form button:hover {
+    background-color: #3e8e41; /* Darker green */
+  }
+  
