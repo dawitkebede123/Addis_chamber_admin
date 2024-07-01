@@ -3,7 +3,7 @@ import './edit_form.css'; // Import your CSS file
 import { initializeApp } from 'firebase/app';
 import { getDatabase,remove,ref,set,push, query, orderByChild, startAfter, limitToFirst, get, endAt, equalTo, endBefore, update } from 'firebase/database';
 import { Link,useParams,useLocation } from 'react-router-dom';
-import { getStorage, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getStorage,putFile, uploadBytes, getDownloadURL } from 'firebase/storage';
 const firebaseConfig = {
   apiKey: "AIzaSyAeHg32VjgFEPlnwQ1djM1krCQ3lz8GDUY",
   authDomain: "chamber-60982.firebaseapp.com",
@@ -204,22 +204,23 @@ const EditForm = () => {
     // }
 
     try {
-      const storageRef = ref(storage.current, `uploads/${formData.file.name}`); // Create storage reference
-      const uploadTask = uploadBytes(storageRef, formData.file);
+      const storageRef = ref(storage.current, `image/${formData.image}`); // Create storage reference
+      const uploadTask_image =FileReader(storageRef)
+      //  uploadBytes(storageRef, formData.image);
 
       // Display progress bar or loading indicator (optional)
-      uploadTask.on('state_changed',
+      uploadTask_image.on('state_changed',
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload progress:', progress, '%');
         },
         (error) => {
-          console.error('Error uploading file:', error);
+          console.error('Error uploading image:', error);
           // Handle upload errors (e.g., display error message to user)
         },
         async () => {
           const downloadURL = await getDownloadURL(storageRef);
-          console.log('File uploaded successfully:', downloadURL);
+          console.log('Image uploaded successfully:', downloadURL);
 
           // Send data to your backend (adjust based on your setup)
           // You can send formData including the downloadURL
@@ -231,47 +232,18 @@ const EditForm = () => {
       console.error('Error submitting form:', error);
       // Handle general form submission errors
     }
-    console.log(formData)
+    // console.log(formData)
     writeData(formData)
   };
 
   const handleSubmitToDelete = async (event) => {
-    event.preventDefault();
 
     // if (!formData.file) {
     //   console.warn('Please select a file to upload.');
     //   return;
     // }
 
-    try {
-      const storageRef = ref(storage.current, `uploads/${formData.file.name}`); // Create storage reference
-      const uploadTask = uploadBytes(storageRef, formData.file);
-
-      // Display progress bar or loading indicator (optional)
-      uploadTask.on('state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload progress:', progress, '%');
-        },
-        (error) => {
-          console.error('Error uploading file:', error);
-          // Handle upload errors (e.g., display error message to user)
-        },
-        async () => {
-          const downloadURL = await getDownloadURL(storageRef);
-          console.log('File uploaded successfully:', downloadURL);
-
-          // Send data to your backend (adjust based on your setup)
-          // You can send formData including the downloadURL
-
-          setFormData({ name: '', email: '', message: '', file: null }); // Clear form
-        }
-      );
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      // Handle general form submission errors
-    }
-    console.log(formData)
+   
     handleDelete(formData)
   };
 

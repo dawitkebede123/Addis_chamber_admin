@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import './edit_form.css'; // Import your CSS file
 import { initializeApp } from 'firebase/app';
 import { getDatabase,ref,set,push, query, orderByChild, startAfter, limitToFirst, get, endAt, equalTo, endBefore } from 'firebase/database';
-import { getStorage, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getStorage,ref as mediaRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 
 const firebaseConfig = {
@@ -80,55 +80,60 @@ const RegisterForm = () => {
     const { name, value, files } = event.target;
     // const selectedFile = files[0];
     // const fileName = selectedFile.name;
+    if (!files.length) return; 
     setFormData({
       ...formData,
       [name]: value === undefined ? files[0] : value, // Handle file upload
+
     });
     // console.log(files[0].name)
   };
 
   const handleSubmit = async (event) => {
-    
-
     event.preventDefault();
-
+  
+    // Check if a file is selected (optional, uncomment if needed)
     // if (!formData.file) {
     //   console.warn('Please select a file to upload.');
     //   return;
     // }
-
+  
     try {
-      const storageRef = ref(storage.current, `uploads/${formData.file.name}`); // Create storage reference
-      const uploadTask = uploadBytes(storageRef, formData.file);
-
-      // Display progress bar or loading indicator (optional)
-      uploadTask.on('state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload progress:', progress, '%');
-        },
-        (error) => {
-          console.error('Error uploading file:', error);
-          // Handle upload errors (e.g., display error message to user)
-        },
-        async () => {
-          const downloadURL = await getDownloadURL(storageRef);
-          console.log('File uploaded successfully:', downloadURL);
-
-          // Send data to your backend (adjust based on your setup)
-          // You can send formData including the downloadURL
-
-          setFormData({ name: '', email: '', profile: '', file: null }); // Clear form
+      const storageRef = mediaRef(storage.current, `image2/img.jpg`); // Create storage reference
+  
+      if (storageRef) {
+        if (!formData.image) {
+          console.warn('Please select a file to upload.');
+          return; // Prevent further execution if no file is selected
         }
-      );
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      // Handle general form submission errors
-    
-    }
-    console.log(formData)
-    writeData(formData)
-  }
+        
+        console.log(formData.image)
+        // Ensure formData.image is a valid File object
+        if (formData.image instanceof File) {
+          const uploadTask = uploadBytes(storageRef, formData.image);
+  
+          uploadTask.then(
+            () => { // Wait for upload to complete
+              console.log(formData); // Log form data for debugging
+              writeData(formData);   // Call your function to write form data
+          }
+        ).catch((error) => { // Handle upload error
+            console.error('Upload error:', error);
+          });
+        }else {
+          console.error('Invalid file object in formData.image. Please select a file.');
+        }
+      } else {
+        console.error('Error creating storage reference');
+      }
+    } catch (err) {
+      console.error('Error during upload:', err);
+    } 
+    // finally {
+      
+    // }
+  };
+  
 
   return (
     <form className="beautiful-form" onSubmit={handleSubmit}>
