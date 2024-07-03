@@ -80,7 +80,7 @@ const RegisterForm = () => {
     const { name, value, files } = event.target;
     // const selectedFile = files[0];
     // const fileName = selectedFile.name;
-    if (!files.length) return; 
+    // if (!files.length) return; 
     setFormData({
       ...formData,
       [name]: value === undefined ? files[0] : value, // Handle file upload
@@ -99,40 +99,41 @@ const RegisterForm = () => {
     // }
   
     try {
-      const storageRef = mediaRef(storage.current, `image2/img.jpg`); // Create storage reference
+      writeData(formData)
+    //   const storageRef = mediaRef(storage.current, `image2/img.jpg`); // Create storage reference
   
-      if (storageRef) {
-        if (!formData.image) {
-          console.warn('Please select a file to upload.');
-          return; // Prevent further execution if no file is selected
-        }
+    //   if (storageRef) {
+    //     if (!formData.image) {
+    //       console.warn('Please select a file to upload.');
+    //       return; // Prevent further execution if no file is selected
+    //     }
         
-        console.log(formData.image)
-        // Ensure formData.image is a valid File object
-        if (formData.image instanceof File) {
-          const uploadTask = uploadBytes(storageRef, formData.image);
+    //     console.log(formData.image)
+    //     // Ensure formData.image is a valid File object
+    //     if (formData.image instanceof File) {
+    //       const uploadTask = uploadBytes(storageRef, formData.image);
   
-          uploadTask.then(
-            () => { // Wait for upload to complete
-              console.log(formData); // Log form data for debugging
-              writeData(formData);   // Call your function to write form data
-          }
-        ).catch((error) => { // Handle upload error
-            console.error('Upload error:', error);
-          });
-        }else {
-          console.error('Invalid file object in formData.image. Please select a file.');
-        }
-      } else {
-        console.error('Error creating storage reference');
-      }
+    //       uploadTask.then(
+    //         () => { // Wait for upload to complete
+    //           console.log(formData); // Log form data for debugging
+    //           writeData(formData);   // Call your function to write form data
+    //       }
+    //     ).catch((error) => { // Handle upload error
+    //         console.error('Upload error:', error);
+    //       });
+    //     }else {
+    //       console.error('Invalid file object in formData.image. Please select a file.');
+    //     }
+    //   } else {
+    //     console.error('Error creating storage reference');
+    //   }
     } catch (err) {
       console.error('Error during upload:', err);
     } 
     // finally {
       
-    // }
-  };
+    }
+  // };
   
 
   return (
